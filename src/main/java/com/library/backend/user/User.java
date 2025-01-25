@@ -17,6 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
+@Getter
+@Setter
 @Table(name = "_user")
 public class User implements UserDetails {
 
@@ -28,6 +30,7 @@ public class User implements UserDetails {
     private String email;
     private String firstname;
     private String lastname;
+    private Long chosenColorId;
     private Integer age;
     private LocalDateTime registered;
     @OneToMany(mappedBy="user")

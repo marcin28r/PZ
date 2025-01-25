@@ -40,5 +40,7 @@ public class Image {
 
     String name;
 
+    @Lob
+    @Column(name="DESCRIPTION", length=1024)
     String description;
 }

@@ -138,6 +138,7 @@ public class MapStructMapperImpl implements MapStructMapper{
             return null;
         }
         return new UserFullDTO(
+                user.getId(),
                 user.getUsername(),
                 user.getEmail(),
                 user.getFirstname(),

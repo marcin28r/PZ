@@ -70,4 +70,6 @@ public class AuthenticationService {
                 jwtService.extractUsername(token.split(" ")[1].trim())).orElseThrow();
         return Objects.equals(user.getRole(), Role.ADMIN);
     }
+
+
 }

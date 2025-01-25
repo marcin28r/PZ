@@ -1,10 +1,13 @@
 package com.library.backend.config.auth;
 
+import com.library.backend.color.Color;
 import com.library.backend.dto.MapStructMapperImpl;
 import com.library.backend.dto.UserFullDTO;
+import com.library.backend.dto.longReqDTO;
 import com.library.backend.user.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,4 +60,5 @@ public class AuthenticationController {
         token = token.substring(7);
         return ResponseEntity.ok(service.authenticatedRole(token));
     }
+
 }
