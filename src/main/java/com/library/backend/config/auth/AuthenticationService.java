@@ -1,10 +1,14 @@
 package com.library.backend.config.auth;
 
+import com.library.backend.color.Color;
+import com.library.backend.color.ColorRepository;
 import com.library.backend.config.JwtService;
 import com.library.backend.user.Role;
 import com.library.backend.user.User;
 import com.library.backend.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -21,6 +25,7 @@ public class AuthenticationService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final ColorRepository colorRepository;
 
     public AuthenticationResponse register(RegisterRequest request) {
         var user = User.builder()
@@ -71,5 +76,26 @@ public class AuthenticationService {
         return Objects.equals(user.getRole(), Role.ADMIN);
     }
 
+
+    public ResponseEntity<String> putColorId(String token, Long id) {
+        User user = repository.findByUsername(jwtService.extractUsername(token.substring(7))).orElseThrow();
+        user.setChosenColorId(id);
+        repository.save(user);
+
+        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+    }
+
+    public Optional<Color> getUserColor(String token) {
+        // Wyciągnij username z tokenu
+        String username = jwtService.extractUsername(token.substring(7));
+
+        // Znajdź użytkownika w bazie
+        User user = repository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Nie znaleziono użytkownika"));
+
+        // Pobierz kolor przypisany do użytkownika
+        return colorRepository.findById(user.getChosenColorId());
+    }
 
 }
