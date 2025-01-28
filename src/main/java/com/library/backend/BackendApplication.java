@@ -11,14 +11,17 @@ public class BackendApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackendApplication.class, args);
-		JsonRequestGenerator generator = new JsonRequestGenerator();
+
+		JsonRequestGenerator generator = JsonRequestGenerator.getInstance();
 		generator.generate(com.library.backend.book.BookController.class);
 		generator.generate(com.library.backend.category.CategoryController.class);
 		generator.generate(com.library.backend.color.ColorController.class);
 		generator.generate(com.library.backend.comment.CommentController.class);
+		generator.generate(com.library.backend.config.auth.AuthenticationController.class);
+		generator.generate(com.library.backend.price.PriceController.class);
 
-
-//		System.out.println(List.class);
+		generator.generate(com.library.backend.color.ColorController.class);
+		generator.generate(com.library.backend.rent.RentController.class);
 	}
 
 }

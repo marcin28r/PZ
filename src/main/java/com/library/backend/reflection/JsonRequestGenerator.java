@@ -1,8 +1,6 @@
 package com.library.backend.reflection;
 
 import lombok.NoArgsConstructor;
-import lombok.Value;
-import org.hibernate.collection.spi.CollectionSemantics;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.BufferedWriter;
@@ -11,10 +9,21 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.*;
+import java.time.LocalDateTime;
 import java.util.*;
+import java.lang.reflect.Modifier;
 
 @NoArgsConstructor
 public class JsonRequestGenerator {
+
+    private static JsonRequestGenerator instance;
+
+    public static JsonRequestGenerator getInstance(){
+        if (instance == null) {
+            instance = new JsonRequestGenerator();
+        }
+        return instance;
+    }
 
 
     public void generate(Class<?> clas) {
@@ -38,16 +47,11 @@ public class JsonRequestGenerator {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
                 writer.write(clas.getSimpleName() + "\n");
                 for(Method m: clas.getDeclaredMethods()){
-                    writer.write("\n" +getMappingMethod(m) +" : " + mapping + getMappingExtendPath(m) + "\n");
-                    writer.write("{");
-                    if(m.getParameters().length == 0){
-                        writer.write("\nnone");
-                    }else {
+                    writer.write("\n" +getMappingMethod(m)+ " "+ m.getName() +" : " + mapping + getMappingExtendPath(m) + "\n");
+                    if(m.getParameters().length != 0)
                         for(Parameter p: m.getParameters()) {
                             writer.write(this.extractParametersToJson(p));
-                        }
                     }
-                    writer.write("\n}\n");
                 }
 
                 System.out.println("Plik " + file.getAbsolutePath() + " został utworzony.");
@@ -60,14 +64,22 @@ public class JsonRequestGenerator {
     }
 
     private String extractParametersToJson(Parameter p) {
+
         String res = "";
         String row = "";
         if(p.isAnnotationPresent(org.springframework.web.bind.annotation.RequestHeader.class)){
-            res += "\n" + this.JsonNameInType(p.getDeclaredAnnotation(RequestHeader.class).value(),
-                    p.getType(), row);
+            res += "{\n" + this.jsonNameInType(p.getDeclaredAnnotation(RequestHeader.class).value(),
+                    p.getType(), row) + "\n}\n";
         }
-        else if(p.isAnnotationPresent(org.springframework.web.bind.annotation.RequestBody.class)){
-            res += "\n\"body\": " + JsonNameInType(p.getName(), p.getType(), row) ;
+        else
+            if(p.isAnnotationPresent(org.springframework.web.bind.annotation.RequestBody.class)){
+            res += "{\n\"body\": " + jsonNameInType(p.getName(), p.getType(), row) + "\n}\n" ;
+        }
+        else if(p.isAnnotationPresent(org.springframework.web.bind.annotation.RequestParam.class)){
+            res += "{\n" + jsonNameInType(p.getName(), p.getType(), row) + "\n}\n";
+        }
+        else if(p.isAnnotationPresent(org.springframework.web.bind.annotation.PathVariable.class)){
+            res = "";
         }
         else {
             res = "{\n";
@@ -76,7 +88,7 @@ public class JsonRequestGenerator {
     }
 
 
-    private String JsonNameInType(String name, Class<?> type, String row) {
+    private String jsonNameInType(String name, Class<?> type, String row) {
         row += row + " ";
         if(Number.class.isAssignableFrom(type)){
             return row + "\"" + name + "\": 0";
@@ -84,17 +96,19 @@ public class JsonRequestGenerator {
             return row + "\"" + name + "\": \"\"";
         }else if(Arrays.asList(boolean.class).contains(type) ){
             return row + "\"" + name + "\": false";
+        }else if(Arrays.asList(LocalDateTime.class).contains(type) ){
+        return row + "\"" + name + "\": \"" + LocalDateTime.now() + "\"";
         }
         else{
                 String res = "";
                 for(int i =0; i<type.getDeclaredFields().length; i++){
                     if(Collection.class.isAssignableFrom(type.getDeclaredFields()[i].getType())){
                         res += row + row + row +"\"" + type.getDeclaredFields()[i].getName() + "\": [ "
-                               + row + this.JsonCollection(type.getDeclaredFields()[i].getName(), type.getDeclaredFields()[i].getType()
+                               + row + this.jsonCollection(type.getDeclaredFields()[i].getName(), type.getDeclaredFields()[i].getType()
                                 , type, row ) + row + row + row +"]\n";
                     }else {
-                        res += JsonNameInType(type.getDeclaredFields()[i].getName(),
-                                type.getDeclaredFields()[i].getType(), row );
+                        res += jsonNameInType(type.getDeclaredFields()[i].getName(),
+                                    type.getDeclaredFields()[i].getType(), row );
                         if(i != type.getDeclaredFields().length - 1){res += ",\n";};
                     }
                 }
@@ -102,7 +116,7 @@ public class JsonRequestGenerator {
         }
     }
 
-    private String JsonCollection(String name, Class<?> type, Class<?> parentType, String row) {
+    private String jsonCollection(String name, Class<?> type, Class<?> parentType, String row) {
         row += row + " ";
         try {
             Type fieldType = parentType.getDeclaredField(name).getGenericType();
@@ -115,7 +129,7 @@ public class JsonRequestGenerator {
 
                     if (elementType instanceof Class<?>) {
                         Class<?> elementClass = (Class<?>) elementType;
-                       return row + JsonNameInType(elementClass.getName(), elementClass, row );
+                       return row + jsonNameInType(elementClass.getName(), elementClass, row );
                     }
                 }
             }
@@ -157,8 +171,15 @@ public class JsonRequestGenerator {
                 if (paths.length == 0) {
                     paths = (String[]) annotation.annotationType().getDeclaredMethod("value").invoke(annotation);
                 }
-
-                return String.join("/", paths);
+                String res = String.join("/...", paths);
+                for(Parameter p: method.getParameters()){
+                    if(p.isAnnotationPresent(org.springframework.web.bind.annotation.PathVariable.class)){
+                        String reg = "{"+p.getName()+"}";
+                        String rep = "{"+p.getType().getSimpleName()+ " " + p.getName()+ "}";
+                        res = res.replace(reg, rep);
+                    }
+                }
+                return res;
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -17,25 +17,21 @@ public class SliderController {
         return sliderService.createSlider(imageIds);
     }
 
-    // Pobieranie jednego slajdera
     @GetMapping("/{sliderId}")
     public Slider getSlider(@PathVariable Long sliderId) {
         return sliderService.getSlider(sliderId);
     }
 
-    // Pobieranie wszystkich slajderów
     @GetMapping("/")
     public List<Slider> getAllSliders() {
         return sliderService.getAllSliders();
     }
 
-    // Edycja slajdera (zastąpienie listy zdjęć)
     @PutMapping("/{sliderId}")
     public Slider updateSlider(@PathVariable Long sliderId, @RequestBody List<Long> newImageIds) {
         return sliderService.updateSlider(sliderId, newImageIds);
     }
 
-    // Usuwanie slajdera
     @DeleteMapping("/{sliderId}")
     public boolean deleteSlider(@PathVariable Long sliderId) {
         return sliderService.deleteSlider(sliderId);

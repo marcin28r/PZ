@@ -27,7 +27,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping(("/api/image"))
-class ImageController {
+public class ImageController {
 
     @Autowired
     ImageRepository imageRepository;
@@ -49,7 +49,7 @@ class ImageController {
 
     @GetMapping("/all")
     public ResponseEntity<List<Map<String, String>>> getAllImages() {
-        List<Image> images = imageService.getAllImages();  // Pobieramy wszystkie obrazy
+        List<Image> images = imageService.getAllImages();
 
         List<Map<String, String>> response = new ArrayList<>();
 
@@ -58,15 +58,15 @@ class ImageController {
             String imageBase64 = Base64.getEncoder().encodeToString(imageContent);
 
             Map<String, String> imageData = new HashMap<>();
-            imageData.put("id", image.getId().toString());  // Dodajemy ID obrazu
-            imageData.put("imageBase64", imageBase64);  // Base64 obraz
-            imageData.put("name", image.getName());  // Nazwa obrazu
-            imageData.put("description", image.getDescription());  // Opis obrazu
+            imageData.put("id", image.getId().toString());
+            imageData.put("imageBase64", imageBase64);
+            imageData.put("name", image.getName());
+            imageData.put("description", image.getDescription());
 
-            response.add(imageData);  // Dodajemy dane obrazu do odpowiedzi
+            response.add(imageData);
         }
 
-        return ResponseEntity.ok(response);  // Zwracamy listę obrazów w formacie JSON
+        return ResponseEntity.ok(response);
     }
 
 
@@ -74,7 +74,7 @@ class ImageController {
 
 
     @Autowired
-    private ImageService imageService; // Serwis, który pobiera dane o obrazach
+    private ImageService imageService;
 
 
 
@@ -85,16 +85,14 @@ class ImageController {
 
         byte[] imageContent = image.getContent();
 
-        // Przekształcenie obrazu do formatu Base64
         String imageBase64 = Base64.getEncoder().encodeToString(imageContent);
 
-        // Tworzymy odpowiedź zawierającą obraz, nazwę i opis
         Map<String, String> response = new HashMap<>();
         response.put("imageBase64", imageBase64);
-        response.put("name", image.getName());  // Dodajemy nazwę obrazu
-        response.put("description", image.getDescription());  // Dodajemy opis obrazu
+        response.put("name", image.getName());
+        response.put("description", image.getDescription());
 
-        return ResponseEntity.ok(response);  // Zwróć odpowiedź w formacie JSON
+        return ResponseEntity.ok(response);
     }
 
 }

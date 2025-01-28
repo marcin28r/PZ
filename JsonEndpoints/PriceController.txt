@@ -1,0 +1,3 @@
+PriceController
+
+GET getAllPrices : /api/prices

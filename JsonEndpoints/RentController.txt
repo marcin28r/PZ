@@ -1,0 +1,24 @@
+RentController
+
+GET load : /api/rent/{Long id}
+
+POST add : /api/rent
+{
+"body": 
+ {
+   "userId": 0,
+   "bookId": 0 }
+
+}
+
+PUT take : /api/rent
+{
+ "Authorization": ""
+}
+{
+"body": 
+ {
+   "userId": 0,
+   "bookId": 0 }
+
+}

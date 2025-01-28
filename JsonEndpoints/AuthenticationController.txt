@@ -1,4 +1,34 @@
 AuthenticationController
 
-POST : /api/auth/register
+POST register : /api/auth/register
 {
+"body": 
+ {
+   "username": "",
+   "password": "",
+   "firstname": "",
+   "lastname": "",
+   "age": 0,
+   "email": "",
+   "registered": "2025-01-30T19:05:26.277840" }
+
+}
+
+POST register : /api/auth/authentication
+{
+"body": 
+ {
+   "username": "",
+   "password": "" }
+
+}
+
+GET showRole : /api/auth/role
+{
+ "Authorization": ""
+}
+
+GET showProfile : /api/auth/profile
+{
+ "Authorization": ""
+}

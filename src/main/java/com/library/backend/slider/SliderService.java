@@ -66,11 +66,9 @@ public class SliderService {
 
     public Slider createSlider(List<Long> imageIds) {
 
-        // Tworzymy nowy obiekt Slider
         Slider newSlider = new Slider();
-        newSlider.setImageIds(imageIds); // Przypisujemy obrazy
+        newSlider.setImageIds(imageIds);
 
-        // Zapisujemy slider w repozytorium
         return sliderRepository.save(newSlider);
     }
 }

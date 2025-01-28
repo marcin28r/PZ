@@ -1,11 +1,11 @@
 CategoryController
 
-GET : /api/category/
-{{
-
+GET load : /api/category/
+{
+ "id": 0
 }
 
-POST : /api/category
+POST add : /api/category
 {
 "body": 
  {
@@ -14,12 +14,6 @@ POST : /api/category
 
 }
 
-GET : /api/category
-{
-none
-}
+GET loadFull : /api/category/{Long id}/books
 
-GET : /api/category/{id}/books
-{{
-
-}
+GET loadAll : /api/category

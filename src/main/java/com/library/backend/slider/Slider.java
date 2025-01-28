@@ -18,7 +18,7 @@ public class Slider {
     Long id;
 
     @Convert(converter = LongListConverter.class)
-    private List<Long> imageIds; // Lista identyfikatorów zdjęć
+    private List<Long> imageIds;
 
     public Slider(List<Long> imageIds) {
         this.imageIds = imageIds;

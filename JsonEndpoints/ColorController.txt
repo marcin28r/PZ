@@ -1,6 +1,6 @@
 ColorController
 
-POST : api/color
+PUT updateColor : api/color/{Long id}
 {
 "body": 
  {
@@ -11,9 +11,12 @@ POST : api/color
 
 }
 
-PUT : api/color/{id}
-{{
+GET getAllColors : api/color
 
+DELETE deleteColor : api/color/{Long id}
+
+POST addColor : api/color
+{
 "body": 
  {
    "id": 0,
@@ -21,14 +24,4 @@ PUT : api/color/{id}
    "secondary": "",
    "background": "" }
 
-}
-
-DELETE : api/color/{id}
-{{
-
-}
-
-GET : api/color
-{
-none
 }

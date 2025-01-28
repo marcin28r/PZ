@@ -1,8 +1,10 @@
 BookController
 
-PUT : /api/book/u{id}
+PUT update : /api/book/u{id}
 {
  "Authorization": ""
+}
+{
 "body": 
  {
    "id": 0,
@@ -20,14 +22,13 @@ PUT : /api/book/u{id}
 
 }
 
-GET : /api/book/{id}
-{{
+GET load : /api/book/{Long id}
 
-}
-
-POST : /api/book
+POST add : /api/book
 {
  "Authorization": ""
+}
+{
 "body": 
  {
    "id": 0,
@@ -45,13 +46,9 @@ POST : /api/book
 
 }
 
-DELETE : /api/book/{id}
+DELETE delete : /api/book/{Long id}
 {
- "Authorization": ""{
-
+ "Authorization": ""
 }
 
-GET : /api/book
-{
-none
-}
+GET loadAll : /api/book

@@ -1,6 +1,14 @@
 CommentController
 
-POST : /api/comment
+PATCH acceptComment : /api/comment/accept/{Long id}
+
+DELETE deleteComment : /api/comment/{Long id}
+
+GET getCommentById : /api/comment/{Long id}
+
+GET getAllComments : /api/comment
+
+POST addComment : /api/comment
 {
 "body": 
  {
@@ -10,25 +18,5 @@ POST : /api/comment
    "authorSurname": "",
    "content": "",
    "accepted": false }
-
-}
-
-GET : /api/comment
-{
-none
-}
-
-DELETE : /api/comment/{id}
-{{
-
-}
-
-GET : /api/comment/{id}
-{{
-
-}
-
-PATCH : /api/comment/accept/{id}
-{{
 
 }
