@@ -10,9 +10,8 @@ import java.util.Optional;
 public class ImageService {
 
     @Autowired
-    private ImageRepository imageRepository; // Repository do komunikacji z bazą danych
+    private ImageRepository imageRepository;
 
-    // Pobieranie wszystkich zdjęć z bazy danych
     public List<Image> getAllImages() {
         return imageRepository.findAll();
     }

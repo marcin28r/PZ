@@ -1,0 +1,21 @@
+AuthenticationController
+POST : /api/auth/register
+{
+
+
+}
+POST : /api/auth/authentication
+{
+
+
+}
+GET : /api/auth/profile
+{
+"Authorization" : "token"
+
+}
+GET : /api/auth/role
+{
+"Authorization" : "token"
+
+}

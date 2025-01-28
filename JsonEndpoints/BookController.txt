@@ -1,0 +1,30 @@
+BookController
+PUT : /api/book/u{id}
+{
+"Authorization" : "token"
+
+
+}
+GET : /api/book/{id}
+{
+{
+
+
+}
+POST : /api/book
+{
+"Authorization" : "token"
+
+
+}
+DELETE : /api/book/{id}
+{
+"Authorization" : "token"
+{
+
+
+}
+GET : /api/book
+{
+none
+}
