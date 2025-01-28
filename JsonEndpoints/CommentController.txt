@@ -1,0 +1,34 @@
+CommentController
+
+POST : /api/comment
+{
+"body": 
+ {
+   "id": 0,
+   "bookId": 0,
+   "authorName": "",
+   "authorSurname": "",
+   "content": "",
+   "accepted": false }
+
+}
+
+GET : /api/comment
+{
+none
+}
+
+DELETE : /api/comment/{id}
+{{
+
+}
+
+GET : /api/comment/{id}
+{{
+
+}
+
+PATCH : /api/comment/accept/{id}
+{{
+
+}

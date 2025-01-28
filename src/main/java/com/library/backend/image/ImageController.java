@@ -39,9 +39,9 @@ class ImageController {
             @RequestParam String description
     ) throws Exception {
         Image dbImage = new Image();
-        dbImage.setName(name); // Pobieranie nazwy z parametru
-        dbImage.setDescription(description); // Pobieranie opisu z parametru
-        dbImage.setContent(multipartImage.getBytes()); // Pobieranie treści pliku
+        dbImage.setName(name);
+        dbImage.setDescription(description);
+        dbImage.setContent(multipartImage.getBytes());
 
         return imageRepository.save(dbImage).getId();
     }

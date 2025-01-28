@@ -1,0 +1,57 @@
+BookController
+
+PUT : /api/book/u{id}
+{
+ "Authorization": ""
+"body": 
+ {
+   "id": 0,
+   "image": "",
+   "authorName": "",
+   "authorSurname": "",
+   "title": "",
+   "description": "",
+   "categories": [     
+       {
+               "id": 0,
+               "name": ""       }
+   ]
+ }
+
+}
+
+GET : /api/book/{id}
+{{
+
+}
+
+POST : /api/book
+{
+ "Authorization": ""
+"body": 
+ {
+   "id": 0,
+   "image": "",
+   "authorName": "",
+   "authorSurname": "",
+   "title": "",
+   "description": "",
+   "categories": [     
+       {
+               "id": 0,
+               "name": ""       }
+   ]
+ }
+
+}
+
+DELETE : /api/book/{id}
+{
+ "Authorization": ""{
+
+}
+
+GET : /api/book
+{
+none
+}

@@ -1,0 +1,25 @@
+CategoryController
+
+GET : /api/category/
+{{
+
+}
+
+POST : /api/category
+{
+"body": 
+ {
+   "id": 0,
+   "name": "" }
+
+}
+
+GET : /api/category
+{
+none
+}
+
+GET : /api/category/{id}/books
+{{
+
+}

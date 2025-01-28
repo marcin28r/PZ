@@ -1,0 +1,34 @@
+ColorController
+
+POST : api/color
+{
+"body": 
+ {
+   "id": 0,
+   "primary_": "",
+   "secondary": "",
+   "background": "" }
+
+}
+
+PUT : api/color/{id}
+{{
+
+"body": 
+ {
+   "id": 0,
+   "primary_": "",
+   "secondary": "",
+   "background": "" }
+
+}
+
+DELETE : api/color/{id}
+{{
+
+}
+
+GET : api/color
+{
+none
+}

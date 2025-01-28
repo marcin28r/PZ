@@ -1,0 +1,4 @@
+AuthenticationController
+
+POST : /api/auth/register
+{
